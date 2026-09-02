@@ -1,0 +1,138 @@
+@import "tailwindcss";
+
+:root {
+  --bg-primary: #0a0a1a;
+  --bg-secondary: #12122a;
+  --bg-card: rgba(18, 18, 42, 0.6);
+  --accent-purple: #7B6CFF;
+  --accent-amber: #FFB347;
+  --accent-cyan: #5BC0EB;
+  --accent-green: #5BE584;
+  --accent-red: #FF5B5B;
+  --text-primary: #F0F0F5;
+  --text-secondary: #9999AA;
+  --border-glass: rgba(123, 108, 255, 0.15);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+}
+
+.glass {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border-glass);
+  border-radius: 12px;
+}
+
+.glass-amber {
+  border: 1px solid rgba(255, 179, 71, 0.3);
+  box-shadow: 0 0 16px rgba(255, 179, 71, 0.08);
+}
+
+.cyber-glow {
+  box-shadow: 0 0 20px rgba(123, 108, 255, 0.15);
+}
+
+.cyber-border {
+  border: 1px solid rgba(123, 108, 255, 0.3);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(123, 108, 255, 0.3);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(123, 108, 255, 0.5);
+}
+
+input, textarea, select {
+  background: rgba(10, 10, 26, 0.8);
+  border: 1px solid var(--border-glass);
+  border-radius: 8px;
+  color: var(--text-primary);
+  padding: 8px 12px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: var(--accent-purple);
+}
+
+button {
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+button:hover {
+  opacity: 0.85;
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--accent-purple), #5B4CDD);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-weight: 500;
+}
+
+.btn-secondary {
+  background: rgba(123, 108, 255, 0.15);
+  color: var(--accent-purple);
+  border: 1px solid rgba(123, 108, 255, 0.3);
+  border-radius: 8px;
+  padding: 8px 16px;
+}
+
+.btn-danger {
+  background: rgba(255, 91, 91, 0.15);
+  color: var(--accent-red);
+  border: 1px solid rgba(255, 91, 91, 0.3);
+  border-radius: 8px;
+  padding: 8px 16px;
+}
+
+.npc-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.pulse-glow {
+  animation: pulseGlow 2s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 8px rgba(123, 108, 255, 0.2); }
+  50% { box-shadow: 0 0 16px rgba(123, 108, 255, 0.4); }
+}
