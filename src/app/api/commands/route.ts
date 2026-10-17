@@ -1,15 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
+import { requireAuth, readJson, str, badRequest } from '@/lib/auth';
 
 export const dynamic = 'force-dynamic';
 
 export async function POST(req: NextRequest) {
+  const denied = requireAuth(req);
+  if (denied) return denied;
   try {
-    const { target, content } = await req.json();
-    
-    if (!target || !content) {
-      return NextResponse.json({ error: 'Target and content required' }, { status: 400 });
-    }
+    const body = await readJson(req, 16 * 1024);
+    if (!body) return badRequest('Invalid JSON body');
+    const target = str(body.target, 50);
+    const content = str(body.content, 4000);
+    if (!target || !content) return badRequest('Target and content required');
 
     const command = await prisma.command.create({
       data: { target, content, status: 'enviado' },
@@ -37,7 +40,9 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const denied = requireAuth(req);
+  if (denied) return denied;
   try {
     const commands = await prisma.command.findMany({
       orderBy: { timestamp: 'desc' },

@@ -1,16 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { requireAuth, readJson, str, badRequest } from '@/lib/auth';
 
 // ElevenLabs TTS endpoint - converts text to speech audio
 export const dynamic = 'force-dynamic';
 export const maxDuration = 30;
 
 export async function POST(req: NextRequest) {
+  const denied = requireAuth(req);
+  if (denied) return denied;
   try {
-    const { text, voiceId } = await req.json();
-    
-    if (!text || typeof text !== 'string') {
-      return NextResponse.json({ error: 'Text required' }, { status: 400 });
-    }
+    const body = await readJson(req, 32 * 1024);
+    if (!body) return badRequest('Invalid JSON body');
+    const text = str(body.text, 5000);
+    if (!text) return badRequest('Text required (1-5000 chars)');
+    const voiceId = typeof body.voiceId === 'string' && /^[A-Za-z0-9]{1,64}$/.test(body.voiceId) ? body.voiceId : undefined;
 
     const apiKey = process.env.ELEVENLABS_API_KEY;
     const vId = voiceId || process.env.ELEVENLABS_VOICE_ID || 'l32B8XDoylOsZKiSdfhE';
