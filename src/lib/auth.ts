@@ -20,9 +20,11 @@ import { NextRequest, NextResponse } from 'next/server';
 const DEFAULT_SSO_HOST_SUFFIX = '-wmejiasbcn-8378s-projects.vercel.app';
 
 function safeEqual(a: string, b: string): boolean {
-  const ha = crypto.createHash('sha256').update(a).digest();
-  const hb = crypto.createHash('sha256').update(b).digest();
-  return crypto.timingSafeEqual(ha, hb);
+  const ba = Buffer.from(a, 'utf8');
+  const bb = Buffer.from(b, 'utf8');
+  // Length is not secret (fixed-size random key); content comparison is constant-time.
+  if (ba.length !== bb.length) return false;
+  return crypto.timingSafeEqual(ba, bb);
 }
 
 export function isAuthorized(req: NextRequest): boolean {
