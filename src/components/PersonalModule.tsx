@@ -1,27 +1,49 @@
 'use client';
 
 import { useState } from 'react';
-import { getVaultFiles } from '@/lib/vault';
 
 export default function PersonalModule() {
   const [unlocked, setUnlocked] = useState(false);
   const [pin, setPin] = useState('');
   const [error, setError] = useState('');
   const [selectedFile, setSelectedFile] = useState<{ name: string; content: string } | null>(null);
+  const [files, setFiles] = useState<Array<{ name: string; size: string }>>([]);
+  const [checking, setChecking] = useState(false);
 
-  const unlock = () => {
-    const correctPin = process.env.NEXT_PUBLIC_PERSONAL_PIN || 'WAIPL2026';
-    if (pin === correctPin) {
-      setUnlocked(true);
-      setError('');
-    } else {
-      setError('PIN incorrecto');
+  // PIN is verified server-side (/api/personal/unlock); nothing secret lives in the browser.
+  const unlock = async () => {
+    if (!pin || checking) return;
+    setChecking(true);
+    try {
+      const res = await fetch('/api/personal/unlock', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pin }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (res.ok && data.ok) {
+        setFiles(Array.isArray(data.files) ? data.files : []);
+        setUnlocked(true);
+        setError('');
+      } else if (res.status === 429) {
+        setError('Demasiados intentos. Prueba más tarde.');
+      } else if (res.status === 401 && data.error === 'Unauthorized') {
+        setError('Acceso restringido: abre Positron desde la URL protegida');
+      } else {
+        setError(data.error || 'PIN incorrecto');
+      }
+    } catch {
+      setError('Error de conexion');
+    } finally {
+      setChecking(false);
+      setPin('');
     }
   };
 
   const lock = () => {
     setUnlocked(false);
     setPin('');
+    setFiles([]);
     setSelectedFile(null);
   };
 
@@ -69,7 +91,7 @@ export default function PersonalModule() {
 
       <div style={{ display: 'flex', gap: 16 }}>
         <div style={{ width: 240 }}>
-          {getVaultFiles('03-PERSONAL').map(file => (
+          {files.map(file => (
             <button
               key={file.name}
               onClick={() => setSelectedFile({ name: file.name, content: '' })}
