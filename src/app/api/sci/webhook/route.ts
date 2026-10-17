@@ -9,9 +9,48 @@ export const dynamic = 'force-dynamic';
 
 const AUTHORIZED_SENDERS = ['R1','R2','R3','R4','R5','R6','R7','R8','R9','R10','R11','R12','R13'];
 
+const MAX_BODY_BYTES = 256 * 1024;
+const MAX_SKEW_S = 300;
+
+/**
+ * Sender authentication (same scheme as Agente-Will-App verificationGate):
+ *   X-WAIPL-Timestamp: unix seconds
+ *   X-WAIPL-Signature: hex HMAC-SHA256(POSITRON_SCI_WEBHOOK_SECRET, `${ts}.${rawBody}`)
+ * Fail closed when the secret is not configured.
+ */
+function verifySignature(req: NextRequest, rawBody: string): string | null {
+  const secret = (process.env.POSITRON_SCI_WEBHOOK_SECRET || '').trim();
+  if (!secret) return 'WEBHOOK_SECRET_NOT_CONFIGURED';
+  const ts = req.headers.get('x-waipl-timestamp') || '';
+  const sig = (req.headers.get('x-waipl-signature') || '').trim().toLowerCase().replace(/^sha256=/, '');
+  if (!/^\d{9,11}$/.test(ts) || !/^[0-9a-f]{64}$/.test(sig)) return 'MISSING_SIGNATURE';
+  if (Math.abs(Math.floor(Date.now() / 1000) - Number(ts)) > MAX_SKEW_S) return 'STALE_TIMESTAMP';
+  const expected = crypto.createHmac('sha256', secret).update(`${ts}.`).update(rawBody).digest();
+  const given = Buffer.from(sig, 'hex');
+  if (given.length !== expected.length || !crypto.timingSafeEqual(given, expected)) return 'INVALID_SIGNATURE';
+  return null;
+}
+
 export async function POST(req: NextRequest) {
   try {
-    const payload = await req.json();
+    const rawBody = await req.text();
+    if (Buffer.byteLength(rawBody, 'utf8') > MAX_BODY_BYTES) {
+      return NextResponse.json({ status: 'REJECTED', reason: 'PAYLOAD_TOO_LARGE' }, { status: 413 });
+    }
+    const authError = verifySignature(req, rawBody);
+    if (authError) {
+      return NextResponse.json({ status: 'REJECTED', reason: authError }, { status: 401 });
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    let payload: Record<string, any>;
+    try {
+      const parsed = JSON.parse(rawBody);
+      if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new Error('not an object');
+      payload = parsed;
+    } catch {
+      return NextResponse.json({ status: 'REJECTED', reason: 'INVALID_JSON' }, { status: 400 });
+    }
     
     // 1. Validate required fields
     const { message_id, sender_node, target_node, intent, integrity } = payload;

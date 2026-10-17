@@ -74,7 +74,7 @@ nar basado en datos | Operativo |
 
 ## Compartimentación
 
-- **PERSONAL**: Solo William. Protegido con PIN (env var `PERSONAL_PIN`). Ecosistema no accede.
+- **PERSONAL**: Solo William. Protegido con PIN verificado en servidor (`/api/personal/unlock`, env `POSITRON_PERSONAL_PIN`, límite de intentos). Ecosistema no accede.
 - **ECOSISTEMA**: Nodos autorizados + Carla. Briefings, coordinacion, estado del nucleo.
 
 ## ICP (Indice de Coherencia Positronica)
