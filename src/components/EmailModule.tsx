@@ -60,7 +60,7 @@ export default function EmailModule() {
           )}
 
           <p style={{ fontSize: 10, color: 'var(--text-secondary)', textAlign: 'center' }}>
-            Vinculado a wmejiasbcn@gmail.com - Se almacena en DB (tabla Email)
+            Vinculado a [dato personal retirado 2026-10-17] - Se almacena en DB (tabla Email)
           </p>
         </div>
       </div>
