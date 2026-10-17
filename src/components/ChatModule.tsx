@@ -51,6 +51,16 @@ export default function ChatModule() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ content: currentInput, audio: listening }),
       });
+      if (res.status === 401) {
+        setMessages(prev => [...prev, {
+          id: 'auth-' + Date.now(),
+          role: 'brain',
+          content: '[Acceso restringido: abre Positron desde la URL protegida por Vercel para usar el chat]',
+          timestamp: new Date().toISOString(),
+          audio: false,
+        }]);
+        return;
+      }
       const data = await res.json();
       
       if (data.brainMessage) {
