@@ -5,10 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "node scripts/migrate.mjs && next build",
     "start": "next start",
     "lint": "next lint",
-    "db:migrate": "npx prisma migrate deploy",
+    "db:migrate": "node scripts/migrate.mjs",
     "db:generate": "npx prisma generate",
     "postinstall": "npx prisma generate"
   },
