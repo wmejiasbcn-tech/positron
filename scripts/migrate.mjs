@@ -28,13 +28,32 @@ const redact = (s) =>
     .replace(/(password|user(name)?)=[^&\s]+/gi, '$1=<redacted>')
     .replace(/(\bat\s+[`"])[^`"]+([`"])/gi, '$1<redacted-host>$2');
 
+// Migrations that are fully idempotent (only CREATE ... IF NOT EXISTS) and may be
+// safely marked rolled-back and re-applied if a previous attempt failed (P3009).
+const SAFE_TO_RETRY = ['0001_init'];
+
+const env = { ...process.env, DATABASE_URL: process.env[source] };
+const prisma = (args) => {
+  const r = spawnSync('npx', ['prisma', ...args], { env, encoding: 'utf8' });
+  const text = redact(`${r.stdout || ''}\n${r.stderr || ''}`).trim();
+  if (text) console.log(text.split('\n').map((l) => `[migrate] ${l}`).join('\n'));
+  return { status: r.status, out: text };
+};
+
 console.log(`[migrate] running prisma migrate deploy using ${source}`);
-const res = spawnSync('npx', ['prisma', 'migrate', 'deploy'], {
-  env: { ...process.env, DATABASE_URL: process.env[source] },
-  encoding: 'utf8',
-});
-const out = redact(`${res.stdout || ''}\n${res.stderr || ''}`).trim();
-if (out) console.log(out.split('\n').map((l) => `[migrate] ${l}`).join('\n'));
+let res = prisma(['migrate', 'deploy']);
+let out = res.out;
+if (res.status !== 0 && /\bP3009\b/.test(out)) {
+  const failed = SAFE_TO_RETRY.filter((m) => out.includes(m));
+  for (const m of failed) {
+    console.log(`[migrate] previous failed attempt of idempotent migration ${m} — marking rolled back and retrying`);
+    prisma(['migrate', 'resolve', '--rolled-back', m]);
+  }
+  if (failed.length) {
+    res = prisma(['migrate', 'deploy']);
+    out = res.out;
+  }
+}
 
 if (res.status === 0) {
   console.log('[migrate] OK');
