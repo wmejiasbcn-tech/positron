@@ -5,16 +5,16 @@
 ## Posición arquitectónica
 
 ```
-WAIPL → ADN → GRAPHIFY → HARNESS + SCI → POSITRÓN → OLLAMA → AGENTES → GRAPHIFY
+WAIPL → ADN → GRAPHY → HARNESS + SCI → POSITRÓN → OLLAMA → AGENTES → GRAPHY
 ```
 
-Positrón es el **cerebro operativo**. Recibe del Arnés+SCI, procesa, devuelve a Graphify.
+Positrón es el **cerebro operativo**. Recibe del Arnés+SCI, procesa, devuelve a Graphy.
 
 ## Responsabilidad (Sección 45)
 
 | Capa | Responsabilidad |
 |------|----------------|
-| Graphify | Cartografía/contexto relacional |
+| Graphy | Cartografía/contexto relacional |
 | Harness | Contexto, reglas, autoridad, preparación, verificación |
 | SCI | Comunicación, coordinación, transporte, trazabilidad |
 | n8n | Orquestación/ejecución del flujo SCI |
@@ -83,6 +83,8 @@ Positrón NO debe duplicar estos mecanismos. Debe consumirlos via contrato SCI (
   "audit": { "event_id": "...", "timestamp": "..." }
 }
 ```
+
+`graphify_reference`: nombre heredado; referencia a Graphy.
 
 ## Semántica canónica Emily → Carla (Sección 8)
 
