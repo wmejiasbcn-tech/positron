@@ -84,6 +84,8 @@ Positrón NO debe duplicar estos mecanismos. Debe consumirlos via contrato SCI (
 }
 ```
 
+**Trazabilidad del campo heredado:** `graphify_reference` se conserva en este ejemplo únicamente como nombre de campo histórico que remite a la plataforma externa Graphify, inspiración del desarrollo de Graphy. No identifica un sistema, destino ni integración interna. El sistema canónico es Graphy. No renombrar el campo en payloads activos sin inventario de consumidores y migración compatible.
+
 ## Semántica canónica Emily → Carla (Sección 8)
 
 ```
