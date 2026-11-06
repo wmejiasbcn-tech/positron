@@ -5,16 +5,16 @@
 ## Posición arquitectónica
 
 ```
-WAIPL → ADN → GRAPHIFY → HARNESS + SCI → POSITRÓN → OLLAMA → AGENTES → GRAPHIFY
+WAIPL → ADN → GRAPHY → HARNESS + SCI → POSITRÓN → OLLAMA → AGENTES → GRAPHY
 ```
 
-Positrón es el **cerebro operativo**. Recibe del Arnés+SCI, procesa, devuelve a Graphify.
+Positrón es el **cerebro operativo**. Recibe del Arnés+SCI, procesa, devuelve a Graphy.
 
 ## Responsabilidad (Sección 45)
 
 | Capa | Responsabilidad |
 |------|----------------|
-| Graphify | Cartografía/contexto relacional |
+| Graphy | Único sistema canónico / SNC · cartografía y contexto relacional |
 | Harness | Contexto, reglas, autoridad, preparación, verificación |
 | SCI | Comunicación, coordinación, transporte, trazabilidad |
 | n8n | Orquestación/ejecución del flujo SCI |
@@ -55,7 +55,7 @@ El SCI/n8n ya tiene operativo:
 5. Kill Switch (sin bypass)
 6. Audit Log operativo
 7. Contingencia DS-07 (escalada a WILLIAM-SCY-01)
-8. Nomenclatura Graphify/Graphy corregida
+8. Graphy = único SNC canónico; Graphify = plataforma externa de inspiración histórica
 9. Ejecución E2E con respuesta de Carla
 10. Canal Emily → OpenAI → Carla ve
 rificado
@@ -104,13 +104,13 @@ Si Carla no responde, WILLIAM-SCY-01 actúa como contingencia.
 
 ## Nomenclatura (Sección 6)
 
-- Graphify = App/Plataforma
-- Graphy = agente/sistema
+- Graphy = único sistema canónico WAIPL y Sistema Nervioso Central (SNC).
+- Graphify = plataforma externa de inspiración histórica que inspiró Graphy; no es un componente WAIPL ni un sistema alternativo.
 - "Graficar" = prohibido en este contexto
 
 ## Divergencia graph/ vs graphify-out/ (Sección 33)
 
-El informe confirma: se describió graph/ pero físicamente se encontro graphify-out/.
+El informe confirma: se describió graph/ pero físicamente se encontro graphify-out/. El literal `graphify-out/` se conserva como nombre histórico del directorio hallado y provenance técnica; no identifica un sistema canónico WAIPL.
 Esto demuestra DOCUMENTADO no es EXISTENTE.
 El SCI debe poder transportar esa incertidumbre sin convertirla en falso hecho.
 
