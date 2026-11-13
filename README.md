@@ -37,7 +37,7 @@ npm run dev
 
 ## Documentación
 
-- `FICHA.md` — Ficha canónica del nodo #35
+- `FICHA.md` — Ficha canónica del nodo #33
 - `MIGRATION_GUIDE.md` — Guía de migración SQLite a PostgreSQL
 - `SCI_INTEGRATION.md` — Requisitos de integración SCI/n8n (48 secciones)
 
