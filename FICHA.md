@@ -96,7 +96,7 @@ nar basado en datos | Operativo |
 - 12 compartimentos del vault
 - Soberania del Soberano respetada
 
-### Pendiente de alinear
+### Hallazgos del diagnóstico histórico (no revalidados en este cierre)
 - Referencia Super Plantilla v2 (debe ser v3.0)
 - Sin HACR-IA (Humildad/Atencion/Contexto/Revision)
 - Sin Directiva Transversal v1.0 (5 estados, 3 autonomias)
@@ -105,22 +105,25 @@ nar basado en datos | Operativo |
 - PIN en texto plano en Informe (debe ser env var)
 - NPC-EJE simulado (debe ser real o marcado como DEUDA)
 
-## Estado actual
+## Estado verificado — 2026-11-13
 
-- Codigo fuente: pendiente de subida desde sandbox Z.ai
-- Produccion: URL caida (y14c76f1v751-d.space-z.ai)
-- Bus Hermes: deny-until-uri (UNKNOWN)
-- Repo: carpeta `positron/` creada en r
-ama `positron-migration`
+- **Código fuente:** HECHO — versionado en `wmejiasbcn-tech/positron`, rama `main`.
+- **Identidad:** HECHO — nodo **#33 de 47**, círculo Estructura.
+- **GitHub:** HECHO — PR #25 fusionada; merge commit `45164dd2b8e799c1771babed189a1930b9cd94b2`.
+- **CI:** HECHO — workflow `43450560669` completado con `success`; CodeQL completado con `success`.
+- **Producción:** HECHO — Vercel deployment `dpl_4pG2K6FTMgJCRP84CzPpFz9wu8qV`, `READY`, destino `production`, alias `positron-gamma.vercel.app`.
+- **SCI:** contrato `/api/sci/webhook` documentado; esta comprobación no acredita una prueba E2E del bus ni de todas las rutas.
+- **Bus Hermes:** no se declara operativo con la evidencia de este cierre.
 
 ## CANON-CIERRE
 
 | Casilla | Valor |
 |----------|-------|
-| Orquesta | Positron WAIPL |
-| Spec/N3 | N1 - ficha de nodo |
-| Superficie | GitHub Will-AI-Project-Lab |
-| Runtime | No ejecutado |
-| Prueba | Lectura de graph-data.ts en waipl-graph repo |
-| Parada | Ficha creada. Codigo pendiente de importacion. |
-| No es | No es deploy. Es documentacion + infraestructura. |
+| Orquesta | Positrón WAIPL |
+| Spec/N3 | N1 — ficha de nodo |
+| Superficie | `wmejiasbcn-tech/positron`, rama `main` |
+| Runtime | Despliegue Vercel de producción `READY` |
+| Prueba | GitHub Actions y CodeQL `success`; despliegue Vercel `READY` |
+| Alcance de la prueba | CI y estado de despliegue; no equivale a prueba funcional E2E de rutas, NPCs o bus SCI |
+| Cierre | Identidad, documentación, CI y despliegue verificados para este corte |
+| No es | No constituye acreditación funcional de integraciones no probadas |
