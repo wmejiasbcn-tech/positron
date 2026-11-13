@@ -8,7 +8,7 @@ Centro de mando interactivo del Soberano William L. Mejías Navarro.
 ## Nodo canónico
 
 - **ID** `positron`
-- **Nodo** #35 de 46
+- **Nodo** #33 de 47
 - **Círculo** Estructura
 - **Verify** Ejecutar (artefacto comprobable)
 - **Creado por** Z.ai
@@ -37,7 +37,7 @@ npm run dev
 
 ## Documentación
 
-- `FICHA.md` — Ficha canónica del nodo #35
+- `FICHA.md` — Ficha canónica del nodo #33
 - `MIGRATION_GUIDE.md` — Guía de migración SQLite a PostgreSQL
 - `SCI_INTEGRATION.md` — Requisitos de integración SCI/n8n (48 secciones)
 
