@@ -1,6 +1,6 @@
 # Positrón — Segundo Cerebro Positrónico WAIPL
 
-**Nodo #35** | Círculo: Estructura | Verify: Ejecutar
+**Nodo #33** | Círculo: Estructura | Verify: Ejecutar
 
 > Es el segundo cerebro positrónico de todo el ecosistema y del propio Soberano,
 > y es el centro de mando completamente interactivo.
@@ -10,7 +10,7 @@
 | Campo | Valor |
 |-------|-------|
 | ID canónico | `positron` |
-| Nodo | #35 de 46 |
+| Nodo | #33 de 47 |
 | Círculo | Estructura |
 | Jurisdicción | Cerebro operativo |
 | Verify | Ejecutar (artefacto comprobable) |
