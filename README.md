@@ -46,6 +46,6 @@ npm run dev
 - **Código fuente:** HECHO — versionado en este repositorio. La alineación de Positrón con la Tabla 47 se integró mediante la PR #25.
 - **Identidad canónica:** HECHO — nodo **#33 de 47**, círculo Estructura.
 - **GitHub:** HECHO — PR #25 fusionada en `main`; merge commit `45164dd2b8e799c1771babed189a1930b9cd94b2`.
-- **CI:** HECHO — workflow `43450560669` completado con resultado `success`; CodeQL también completado con `success`.
+- **CI:** HECHO — análisis CodeQL (ejecución `43450560669`, «Push on main», sobre `45164dd`) completado con resultado `success`. El repositorio no tiene otro flujo de integración continua; Vercel compila en cada despliegue.
 - **Producción:** HECHO — despliegue Vercel `dpl_4pG2K6FTMgJCRP84CzPpFz9wu8qV`, estado `READY`, destino `production`; alias `positron-gamma.vercel.app` asociado.
 - **SCI:** el contrato `/api/sci/webhook` figura documentado. Este estado de despliegue no acredita por sí solo una prueba funcional de extremo a extremo del bus SCI ni de todas las rutas API.

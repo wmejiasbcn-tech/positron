@@ -110,7 +110,7 @@ nar basado en datos | Operativo |
 - **Código fuente:** HECHO — versionado en `wmejiasbcn-tech/positron`, rama `main`.
 - **Identidad:** HECHO — nodo **#33 de 47**, círculo Estructura.
 - **GitHub:** HECHO — PR #25 fusionada; merge commit `45164dd2b8e799c1771babed189a1930b9cd94b2`.
-- **CI:** HECHO — workflow `43450560669` completado con `success`; CodeQL completado con `success`.
+- **CI:** HECHO — análisis CodeQL (ejecución `43450560669`, sobre `45164dd`) completado con `success`; no hay otro flujo de integración continua.
 - **Producción:** HECHO — Vercel deployment `dpl_4pG2K6FTMgJCRP84CzPpFz9wu8qV`, `READY`, destino `production`, alias `positron-gamma.vercel.app`.
 - **SCI:** contrato `/api/sci/webhook` documentado; esta comprobación no acredita una prueba E2E del bus ni de todas las rutas.
 - **Bus Hermes:** no se declara operativo con la evidencia de este cierre.
@@ -123,7 +123,7 @@ nar basado en datos | Operativo |
 | Spec/N3 | N1 — ficha de nodo |
 | Superficie | `wmejiasbcn-tech/positron`, rama `main` |
 | Runtime | Despliegue Vercel de producción `READY` |
-| Prueba | GitHub Actions y CodeQL `success`; despliegue Vercel `READY` |
+| Prueba | CodeQL `success`; despliegue Vercel `READY` |
 | Alcance de la prueba | CI y estado de despliegue; no equivale a prueba funcional E2E de rutas, NPCs o bus SCI |
 | Cierre | Identidad, documentación, CI y despliegue verificados para este corte |
 | No es | No constituye acreditación funcional de integraciones no probadas |
