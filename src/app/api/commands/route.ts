@@ -27,13 +27,13 @@ export async function POST(req: NextRequest) {
       },
     });
 
-    // Simulate processing -> completed
-    await prisma.command.update({
-      where: { id: command.id },
-      data: { status: 'completado' },
+    // NPC-EJE is technical debt: the command is recorded, not executed.
+    // Never report it as 'completado' without real processing.
+    return NextResponse.json({
+      ...command,
+      execution: 'NO_IMPLEMENTADO',
+      note: 'Comando registrado; NPC-EJE no está implementado y no se ejecuta.',
     });
-
-    return NextResponse.json({ ...command, status: 'completado' });
   } catch (error) {
     console.error('Command API error:', error);
     return NextResponse.json({ error: 'Internal error' }, { status: 500 });
