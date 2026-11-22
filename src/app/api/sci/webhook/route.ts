@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 
-// SCI Webhook - Positron receives SCI messages from n8n
-// Must validate SHA-256, respect Kill Switch, return correct states
-// RECEIVED -> ACCEPTED -> EXECUTING -> EXECUTED -> VERIFIED
+// SCI Webhook - Positron receiver for SCI messages.
+// Today it only validates and acknowledges (RECEIVED). It does NOT execute,
+// queue, persist or call back, and it does not consult a Kill Switch yet, so it
+// must never report ACCEPTED/EXECUTING or OPERATIONAL/ACTIVE (SCI_INTEGRATION.md §5, §129).
 
 export const dynamic = 'force-dynamic';
 
@@ -98,18 +99,17 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    // 5. Return RECEIVED -> ACCEPTED
-    // In production, this would process the operation asynchronously
+    // 5. Acknowledge only. ACK is not a result (SCI_INTEGRATION.md §3).
     return NextResponse.json({
-      status: 'ACCEPTED',
+      status: 'RECEIVED',
       message_id,
       correlation_id: payload.correlation_id || null,
       protocol_version: payload.protocol_version || 'SCI-WAIPL-1.0',
       received_at: new Date().toISOString(),
       execution: {
-        status: 'EXECUTING',
+        status: 'NO_IMPLEMENTADO',
       },
-      next: 'Processing will continue asynchronously. Positron will return EXECUTED -> VERIFIED via SCI callback.',
+      next: 'Sin procesamiento: Positrón todavía no ejecuta operaciones SCI ni devuelve resultados.',
     });
 
   } catch (error) {
@@ -121,12 +121,13 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// Kill Switch check endpoint
+// Status check for the receiver (no fixed fake values).
 export async function GET() {
   return NextResponse.json({
-    kill_switch: 'OFF',
-    status: 'OPERATIONAL',
-    positron: 'ACTIVE',
+    kill_switch: 'NO_IMPLEMENTADO',
+    status: 'NO_DETERMINADO',
+    positron: 'NO_ACTIVO',
+    reason: 'Migración pendiente: sin emisor SCI conectado y sin procesamiento de mensajes.',
     timestamp: new Date().toISOString(),
   });
 }

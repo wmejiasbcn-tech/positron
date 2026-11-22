@@ -3,14 +3,19 @@
 import { useEffect, useState } from 'react';
 
 interface HealthData {
-  icp: number;
+  estado?: string;
+  motivo?: string;
+  icp: number | null;
   level: string;
-  archivosTotales: number;
+  archivosTotales: number | null;
   npcsOperativos: string;
-  alertasActivas: number;
-  vault: Record<string, { status: string; files: number }>;
+  alertasActivas: number | null;
+  vault: Record<string, { status: string; files: number | null }>;
   npcs: Array<{ id: string; status: string }>;
 }
+
+const NOT_VERIFIED = 'No verificado';
+const MUTED = 'var(--text-secondary)';
 
 export default function DashboardICP() {
   const [health, setHealth] = useState<HealthData | null>(null);
@@ -26,14 +31,16 @@ export default function DashboardICP() {
   if (loading) return <div style={{ padding: 40, textAlign: 'center', color: 'var(--text-secondary)' }}>Cargando dashboard...</div>;
   if (!health) return <div style={{ padding: 40, textAlign: 'center', color: 'var(--accent-red)' }}>Error al cargar health-check</div>;
 
-  const icpColor = health.icp >= 95 ? 'var(--accent-green)' : health.icp >= 85 ? 'var(--accent-amber)' : 'var(--accent-red)';
-  const statusColor = (status: string) => status === 'ok' ? 'var(--accent-green)' : status === 'warning' ? 'var(--accent-amber)' : 'var(--accent-red)';
+  const icp = typeof health.icp === 'number' ? health.icp : null;
+  const icpColor = icp === null ? MUTED : icp >= 95 ? 'var(--accent-green)' : icp >= 85 ? 'var(--accent-amber)' : 'var(--accent-red)';
+  const statusColor = (status: string) => status === 'ok' ? 'var(--accent-green)' : status === 'warning' ? 'var(--accent-amber)' : status === 'error' ? 'var(--accent-red)' : MUTED;
+  const show = (v: number | string | null | undefined) => (v === null || v === undefined || v === 'NO_VERIFICADO' ? NOT_VERIFIED : String(v));
 
   const kpis = [
-    { label: 'ICP del Vault', value: `${health.icp}%`, detail: `${health.level} - Preventivo`, color: icpColor },
-    { label: 'Archivos Totales', value: String(health.archivosTotales), detail: '12 compartimientos', color: 'var(--accent-cyan)' },
-    { label: 'NPCs Operativos', value: health.npcsOperativos, detail: '100% operativos', color: 'var(--accent-green)' },
-    { label: 'Alertas Activas', value: String(health.alertasActivas), detail: 'Sin incidencias', color: 'var(--accent-green)' },
+    { label: 'ICP del Vault', value: icp === null ? NOT_VERIFIED : `${icp}%`, detail: health.level, color: icpColor },
+    { label: 'Archivos Totales', value: show(health.archivosTotales), detail: 'Vault simulado (migración pendiente)', color: MUTED },
+    { label: 'NPCs Operativos', value: show(health.npcsOperativos), detail: 'Sin medición en este despliegue', color: MUTED },
+    { label: 'Alertas Activas', value: show(health.alertasActivas), detail: 'Sin medición en este despliegue', color: MUTED },
   ];
 
   const vaultEntries = Object.entries(health.vault);
@@ -47,19 +54,18 @@ export default function DashboardICP() {
           <circle
             cx="60" cy="60" r="50" fill="none" stroke={icpColor} strokeWidth="8"
             strokeDasharray={2 * Math.PI * 50}
-            strokeDashoffset={2 * Math.PI * 50 * (1 - health.icp / 100)}
+            strokeDashoffset={2 * Math.PI * 50 * (1 - (icp ?? 0) / 100)}
             strokeLinecap="round"
             transform="rotate(-90 60 60)"
             style={{ transition: 'stroke-dashoffset 1s ease' }}
           />
-          <text x="60" y="58" textAnchor="middle" fill={icpColor} fontSize="24" fontWeight="700">{health.icp}%</text>
+          <text x="60" y="58" textAnchor="middle" fill={icpColor} fontSize={icp === null ? 14 : 24} fontWeight="700">{icp === null ? 'N/V' : `${icp}%`}</text>
           <text x="60" y="76" textAnchor="middle" fill="var(--text-secondary)" fontSize="11">{health.level}</text>
         </svg>
         <div>
           <h3 style={{ fontSize: 16, color: 'var(--accent-purple)', marginBottom: 8 }}>Indice de Coherencia Positronica</h3>
           <p style={{ fontSize: 13, color: 'var(--text-secondary)', maxWidth: 400 }}>
-            El sistema se encuentra en estado OPERATIVO. Todas las funcionalidades del dashboard interactivo estan activas.
-            Las 12 rutas API responden con status 200.
+            {health.motivo || 'Estado no determinado.'} El ICP no se calcula en este despliegue, por lo que no se muestra ninguna cifra.
           </p>
         </div>
       </div>
@@ -84,7 +90,7 @@ export default function DashboardICP() {
               <div key={folder} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '6px 8px', background: 'rgba(10,10,26,0.5)', borderRadius: 6 }}>
                 <span style={{ width: 8, height: 8, borderRadius: '50%', background: statusColor(data.status), display: 'inline-block' }} />
                 <span style={{ fontSize: 11, color: 'var(--text-secondary)' }}>{folder}</span>
-                <span style={{ fontSize: 10, color: 'var(--text-secondary)', marginLeft: 'auto' }}>{data.files}</span>
+                <span style={{ fontSize: 10, color: 'var(--text-secondary)', marginLeft: 'auto' }}>{data.files ?? '—'}</span>
               </div>
             ))}
           </div>
@@ -95,10 +101,10 @@ export default function DashboardICP() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {health.npcs.map(npc => (
               <div key={npc.id} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '8px 12px', background: 'rgba(10,10,26,0.5)', borderRadius: 6 }}>
-                <span className="npc-dot" style={{ background: npc.status === 'operativo' ? 'var(--accent-green)' : 'var(--accent-amber)' }} />
+                <span className="npc-dot" style={{ background: npc.status === 'operativo' ? 'var(--accent-green)' : npc.status === 'deuda' ? 'var(--accent-amber)' : MUTED }} />
                 <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--accent-purple)' }}>NPC-{npc.id}</span>
-                <span style={{ fontSize: 12, color: npc.status === 'operativo' ? 'var(--accent-green)' : 'var(--accent-amber)', marginLeft: 'auto' }}>
-                  {npc.status === 'operativo' ? 'Operativo' : 'Deuda tecnica'}
+                <span style={{ fontSize: 12, color: npc.status === 'operativo' ? 'var(--accent-green)' : npc.status === 'deuda' ? 'var(--accent-amber)' : MUTED, marginLeft: 'auto' }}>
+                  {npc.status === 'operativo' ? 'Operativo' : npc.status === 'deuda' ? 'Deuda tecnica' : NOT_VERIFIED}
                 </span>
               </div>
             ))}

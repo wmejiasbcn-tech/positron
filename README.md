@@ -49,3 +49,14 @@ npm run dev
 - **CI:** HECHO — análisis CodeQL (ejecución `43450560669`, «Push on main», sobre `45164dd`) completado con resultado `success`. El repositorio no tiene otro flujo de integración continua; Vercel compila en cada despliegue.
 - **Producción:** HECHO — despliegue Vercel `dpl_4pG2K6FTMgJCRP84CzPpFz9wu8qV`, estado `READY`, destino `production`; alias `positron-gamma.vercel.app` asociado.
 - **SCI:** el contrato `/api/sci/webhook` figura documentado. Este estado de despliegue no acredita por sí solo una prueba funcional de extremo a extremo del bus SCI ni de todas las rutas API.
+
+## Estado funcional — 2026-11-22
+
+Positrón está desplegado, pero **no está activo**: falta completar la migración. Las rutas de estado ya no devuelven valores fijos:
+
+- `/api/sci/status` y `GET /api/sci/webhook`: `NO_ACTIVO`; interruptor de emergencia `NO_IMPLEMENTADO`; conexión SCI `NO_IMPLEMENTADA`.
+- `POST /api/sci/webhook`: valida y responde `RECEIVED`; no ejecuta operaciones (`execution.status = NO_IMPLEMENTADO`).
+- `/api/health`: ICP, archivos, NPCs y alertas `NO_VERIFICADO` (sin medición en este despliegue); vault `SIMULADO`.
+- `/api/commands`: los comandos quedan registrados como `enviado`; NPC-EJE no está implementado y no se marcan como completados.
+
+Pendiente de migración: proveedor del cerebro (la biblioteca de Z.ai necesita `.z-ai-config`, que no existe aquí), vault real, separación PERSONAL/ECOSISTEMA en chat y capturas, y receptor SCI con emisor real.
