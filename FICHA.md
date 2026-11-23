@@ -10,7 +10,7 @@
 | Campo | Valor |
 |-------|-------|
 | ID canónico | `positron` |
-| Nodo | #33 de 47 |
+| Nodo | #33 de 49 |
 | Círculo | Estructura |
 | Jurisdicción | Cerebro operativo |
 | Verify | Ejecutar (artefacto comprobable) |
@@ -88,7 +88,7 @@ nar basado en datos | Operativo |
 ## Alineación ADN
 
 ### Alineado
-- 3 capas (Nucleo/Vortice/Perifericos)
+- Taxonomía orbital vigente (Núcleo/Vórtice/Cinturón de Kuiper/Borde Exterior)
 - 7 NPCs base
 - Compartimentacion Personal/Ecosistema
 - ICP + health-check
@@ -108,7 +108,7 @@ nar basado en datos | Operativo |
 ## Estado verificado — 2026-11-13
 
 - **Código fuente:** HECHO — versionado en `wmejiasbcn-tech/positron`, rama `main`.
-- **Identidad:** HECHO — nodo **#33 de 47**, círculo Estructura.
+- **Identidad:** HECHO — nodo **#33 de 49**, círculo Estructura.
 - **GitHub:** HECHO — PR #25 fusionada; merge commit `45164dd2b8e799c1771babed189a1930b9cd94b2`.
 - **CI:** HECHO — análisis CodeQL (ejecución `43450560669`, sobre `45164dd`) completado con `success`; no hay otro flujo de integración continua.
 - **Producción:** HECHO — Vercel deployment `dpl_4pG2K6FTMgJCRP84CzPpFz9wu8qV`, `READY`, destino `production`, alias `positron-gamma.vercel.app`.
@@ -127,3 +127,8 @@ nar basado en datos | Operativo |
 | Alcance de la prueba | CI y estado de despliegue; no equivale a prueba funcional E2E de rutas, NPCs o bus SCI |
 | Cierre | Identidad, documentación, CI y despliegue verificados para este corte |
 | No es | No constituye acreditación funcional de integraciones no probadas |
+
+
+## Nota de vigencia del inventario — 2026-11-23
+
+La identidad vigente de Positrón es **nodo 33 de 49**, círculo funcional **Estructura**. La fuente canónica es la [Tabla 49 de SENTINEL](https://github.com/wmejiasbcn-tech/SENTINEL/blob/main/docs/governance/tabla_49_nodos.csv). La clasificación orbital general distingue Núcleo (nodos nucleares), Vórtice (nodos vorticiales), Cinturón de Kuiper (nodos cinturianos) y Borde Exterior. **Vórtice y Cinturón de Kuiper son posiciones distintas.** El bloque «Estado verificado — 2026-11-13» conserva su corte histórico; no representa el censo actual.
