@@ -8,7 +8,7 @@ Centro de mando interactivo del Soberano William L. Mejías Navarro.
 ## Nodo canónico
 
 - **ID** `positron`
-- **Nodo** #33 de 47
+- **Nodo** #33 de 49
 - **Círculo** Estructura
 - **Verify** Ejecutar (artefacto comprobable)
 - **Creado por** Z.ai
@@ -43,8 +43,8 @@ npm run dev
 
 ## Estado verificado — 2026-11-13
 
-- **Código fuente:** HECHO — versionado en este repositorio. La alineación de Positrón con la Tabla 47 se integró mediante la PR #25.
-- **Identidad canónica:** HECHO — nodo **#33 de 47**, círculo Estructura.
+- **Código fuente:** HECHO — versionado en este repositorio. La ficha vigente refleja la Tabla 49 (nodo 33 de 49). La PR #25 conserva su valor histórico para la alineación previa con Tabla 47.
+- **Identidad canónica:** HECHO — nodo **#33 de 49**, círculo Estructura.
 - **GitHub:** HECHO — PR #25 fusionada en `main`; merge commit `45164dd2b8e799c1771babed189a1930b9cd94b2`.
 - **CI:** HECHO — análisis CodeQL (ejecución `43450560669`, «Push on main», sobre `45164dd`) completado con resultado `success`. El repositorio no tiene otro flujo de integración continua; Vercel compila en cada despliegue.
 - **Producción:** HECHO — despliegue Vercel `dpl_4pG2K6FTMgJCRP84CzPpFz9wu8qV`, estado `READY`, destino `production`; alias `positron-gamma.vercel.app` asociado.
@@ -60,3 +60,8 @@ Positrón está desplegado, pero **no está activo**: falta completar la migraci
 - `/api/commands`: los comandos quedan registrados como `enviado`; NPC-EJE no está implementado y no se marcan como completados.
 
 Pendiente de migración: proveedor del cerebro (la biblioteca de Z.ai necesita `.z-ai-config`, que no existe aquí), vault real, separación PERSONAL/ECOSISTEMA en chat y capturas, y receptor SCI con emisor real.
+
+
+## Inventario y clasificación vigentes — 2026-11-23
+
+La fuente canónica es la [Tabla 49 de SENTINEL](https://github.com/wmejiasbcn-tech/SENTINEL/blob/main/docs/governance/tabla_49_nodos.csv). Positrón permanece como nodo 33, círculo Estructura. La clasificación orbital general distingue Núcleo/nucleares, Vórtice/vorticiales, Cinturón de Kuiper/cinturianos y Borde Exterior. Vórtice y Kuiper son posiciones distintas.
